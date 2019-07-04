@@ -20,8 +20,8 @@ public class Ensemble<T> extends AbstractSet<T> {
             return false;
         } else {
             table.add(t);
+                   return true;
         }
-        return true;
     }
 
     public Ensemble<T> union(Ensemble<? extends T> e) {
