@@ -32,6 +32,7 @@ public class JPanelListe2 extends JPanel implements ActionListener, ItemListener
     private TextArea texte = new TextArea();
 
     private List<String> liste;
+     private List<String> RollBackliste;
     private Map<String, Integer> occurrences;
 
     public JPanelListe2(List<String> liste, Map<String, Integer> occurrences) {
@@ -68,6 +69,11 @@ public class JPanelListe2 extends JPanel implements ActionListener, ItemListener
 
         boutonRechercher.addActionListener(this);
         // à compléter;
+        boutonOccurrences.addActionListener(this);
+        boutonRetirer.addActionListener(this);
+        ordreCroissant.addItemListener(this);
+        ordreDecroissant.addItemListener(this);
+        boutonAnnuler.addActionListener(this);
 
     }
 
@@ -100,10 +106,12 @@ public class JPanelListe2 extends JPanel implements ActionListener, ItemListener
     }
 
     public void itemStateChanged(ItemEvent ie) {
+        this.RollBackliste = new LinkedList<String>();
+        this.RollBackliste.addAll(liste);
         if (ie.getSource() == ordreCroissant)
-        ;// à compléter
+           Collections.sort(liste);
         else if (ie.getSource() == ordreDecroissant)
-        ;// à compléter
+         Collections.sort(liste, new ClassToCompare());
 
         texte.setText(liste.toString());
     }
@@ -111,9 +119,27 @@ public class JPanelListe2 extends JPanel implements ActionListener, ItemListener
     private boolean retirerDeLaListeTousLesElementsCommencantPar(String prefixe) {
         boolean resultat = false;
         // à compléter
-        // à compléter
-        // à compléter
+       Iterator<String> it = liste.iterator();
+
+        this.RollBackliste = new LinkedList<String>();
+        this.RollBackliste.addAll(liste);
+
+        while(it.hasNext())
+        {
+            String s= it.next();
+        
+            if(s.startsWith(prefixe)){
+                it.remove();
+                resultat=true;  
+                occurrences.remove(s);
+                occurrences.put(s,0);
+            }
+        }
         return resultat;
     }
-
+    private class ClassToCompare implements Comparator<String>{
+        public int compare(String t1,String t2){
+            return t2.compareTo(t1);
+        }
+    }
 }
