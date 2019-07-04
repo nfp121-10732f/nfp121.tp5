@@ -4,44 +4,67 @@ import java.util.*;
 
 public class Ensemble<T> extends AbstractSet<T> {
 
-	protected java.util.Vector<T> table = new java.util.Vector<T>();
+    protected java.util.Vector<T> table = new java.util.Vector<T>();
 
-	public int size() {
-		return table.size();
-	}
+    public int size() {
+        return table.size();
+    }
 
-	public Iterator<T> iterator() {
-		return table.iterator();
-	}
+    public Iterator<T> iterator() {
+        return table.iterator();
+    }
 
-	public boolean add(T t) {
-		// à compléter pour la question1-1
+    public boolean add(T t) {
+        // à compléter pour la question1-1
+        if (table.contains(t)) {
+            return false;
+        } else {
+            table.add(t);
+        }
+        return true;
+    }
 
-		return false;
-	}
+    public Ensemble<T> union(Ensemble<? extends T> e) {
+        // à compléter pour la question1-2
+	Ensemble<T> ensunion = new Ensemble<T>();
 
-	public Ensemble<T> union(Ensemble<? extends T> e) {
-		// à compléter pour la question1-2
+		ensunion.addAll(e);
+		ensunion.addAll(table);
 
-		return null;
-	}
+		return ensunion;
+    }
 
-	public Ensemble<T> inter(Ensemble<? extends T> e) {
-		// à compléter pour la question1-2
+    public Ensemble<T> inter(Ensemble<? extends T> e) {
+        // à compléter pour la question1-2
+	Ensemble<T> ensinter = new Ensemble<T>();
 
-		return null;
-	}
+		ensinter.addAll(table);
+		ensinter.retainAll(e);
+		return ensinter;
+    }
 
-	public Ensemble<T> diff(Ensemble<? extends T> e) {
-		// à compléter pour la question1-2
+    public Ensemble<T> diff(Ensemble<? extends T> e) {
+        // à compléter pour la question1-2
+Ensemble<T> ensdiff = new Ensemble<T>();
 
-		return null;
-	}
+		ensdiff.addAll(table);
+		ensdiff.removeAll(e);
+		return ensdiff;
+    }
 
-	Ensemble<T> diffSym(Ensemble<? extends T> e) {
-		// à compléter pour la question1-2
+    Ensemble<T> diffSym(Ensemble<? extends T> e) {
+        // à compléter pour la question1-2
+                Ensemble<T> ensdiff1 = new Ensemble<T>();
+		Ensemble<T> ensdiff2 = new Ensemble<T>();
+		Ensemble<T> ensdiffsym = new Ensemble<T>();
 
-		return null;
-	}
-	
+		ensdiff1.addAll(table);
+		ensdiff1.removeAll(e);
+
+		ensdiff2.addAll(e);
+		ensdiff2.removeAll(table);
+
+		return ensdiff1.union(ensdiff2);
+    }
+    
 }
